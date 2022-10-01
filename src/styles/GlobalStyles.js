@@ -98,6 +98,5 @@ border:#fff !important;
 
 
 
-
 `;
 export default GlobalStyles;

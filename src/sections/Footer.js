@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SliderSection.css";
 import styled from "styled-components";
 import Logo from "../assets/logo.png";
 import { motion } from "framer-motion";
 import { useLocomotiveScroll } from "react-locomotive-scroll";
-import ReactTooltip from "react-tooltip";
 
 const Section = styled.section`
   min-height: 100vh;
@@ -59,19 +58,96 @@ const LogoContainer = styled.div`
 
 const FooterComponent = styled(motion.footer)`
   width: 80vw;
+  position: relative;
 
-  #disclamier{
-    max-width:50%;
-    text-align:left;
-    padding:0.5rem;
-    background-color:rgb(49,48,45);
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    border-bottom: none !important;
+  }
+
+  .tooltip .tooltiptext {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    visibility: hidden;
+    width: 100%;
+    background-color: #282828;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 1rem;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 30%;
+  }
+  .tooltip .tooltiptextLeft {
+    visibility: hidden;
+    width: 120px;
+    background-color: #282828;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+  }
+  .tooltip .tooltiptextLeft::after {
+    content: "";
+    position: absolute;
+
+    top: 100%;
+    left: 50%;
+    margin-left: -44px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #404040 transparent transparent transparent;
+  }
+
+  .tooltip:hover .tooltiptextLeft {
+    visibility: visible;
+  }
+
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #404040 transparent transparent transparent;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
+  .disclaimer {
+    max-height: 40vh;
+    width: 100%;
+    overflow-y: scroll;
+    margin-top: -50vh;
+    border-radius: 10px;
+    padding: 1rem;
+    max-width: 50%;
+    color: black;
+    text-align: left;
+    font-size: 18px;
+
+    background-color: #fff;
+  }
+  .disclaimer > p {
+    font-size: 1.5rem;
   }
   @media (max-width: 48em) {
     width: 100%;
-    #disclamier{
-      width:100% !important;
-      
-      }
+    #disclamier {
+      width: 100% !important;
+    }
   }
   ul {
     list-style-type: none;
@@ -104,7 +180,6 @@ const FooterComponent = styled(motion.footer)`
     @media (max-width: 48em) {
       padding: 1rem;
       font-size: ${(props) => props.theme.fontmd};
-      
     }
   }
 `;
@@ -139,6 +214,7 @@ const Bottom = styled.div`
 
 const Footer = () => {
   const { scroll } = useLocomotiveScroll();
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   const handleScroll = (id) => {
     let ele = document.querySelector(id);
@@ -152,11 +228,16 @@ const Footer = () => {
   return (
     <Section id="info">
       <LogoContainer>
-      <a href="/">
-        <img data-scroll data-scroll-speed="1" src={Logo} alt="Company Name" />
-        <h3 data-scroll data-scroll-speed="0">
-          ART FOR UNITY
-        </h3>
+        <a href="/">
+          <img
+            data-scroll
+            data-scroll-speed="1"
+            src={Logo}
+            alt="Company Name"
+          />
+          <h3 data-scroll data-scroll-speed="0">
+            ART FOR UNITY
+          </h3>
         </a>
       </LogoContainer>
       <FooterComponent
@@ -167,14 +248,13 @@ const Footer = () => {
       >
         <ul>
           <li>
-          <a href="/">home</a>
-
+            <a href="/">home</a>
           </li>
           <li>
-              <a href="/teams">Our Team</a>
+            <a href="/teams">Our Team</a>
           </li>
           <li>
-              <a href="/contact">contact</a>
+            <a href="/contact">contact</a>
           </li>
           <li>
             {" "}
@@ -199,34 +279,37 @@ const Footer = () => {
             data-scroll-speed="2"
             data-scroll-direction="horizontal"
           > */}
-            &copy; {new Date().getFullYear()} All Rights Reserved
+          &copy; {new Date().getFullYear()} All Rights Reserved
           {/* </span> */}
-          <br/>
-           Bhoomija Services
-           <br/>
-                  <span data-tip data-for="disclamier">
-                  DISCLAIMER
-                  </span>
-
-           <ReactTooltip id="disclamier" place="top" effect="solid">
-       
-         <p style={{fontSize:'16px'}}>DISCLAIMER</p>
-            <br/>
-              The information contained in this Website is provided for informational purposes only, solely on the basis that users will be responsible for making their own assessment of the information shared herein and are advised to verify all relevant representations, statements and information.
-                <br/>Every effort has been made to offer the most current, correct, and clearly expressed information possible in our web site. Nevertheless, inadvertent errors in information may occur. In particular but without limitation, the Unison World School (UWS) disclaims any responsibility for typographical errors and accuracy of the information that may be contained on its web pages. The information and data included are subject to change without notice. The services, information, and data made available on the UWS website are provided "as is" without warranties of any kind. UWS does take responsibility to correct an error, within our abilities, when brought to our attention. 
-                <br/> Some links within the Website may lead to other web-sites, including those operated and maintained by third parties. UWS includes these links solely as a convenience to you, and the presence of such a link does not imply a responsibility for the linked site or an endorsement of the linked site, its operator, or its contents.
-                <br/> UWS does not represent or warrant that any content/files obtained from or through this Site or a Linked Site are free from computer viruses or other defects. UWS accepts no liability for the presence of computer viruses or other defects.
-                <br/> UWS may use images from web searches for banners and promotional materials.  These images are credited here to the best of our ability. 
-                <br/>Stock photographs for the link 'JOIN US' come from  http://freepik.com
-
-         
-							
-      </ReactTooltip>
+          <br />
+          Bhoomija Services
+          <br />
+          <div className="tooltip">
+            <span className="disclaimer tooltiptext">
+              <p>DISCLAIMER</p>
+              <br />
+              Please read this disclaimer ("disclaimer") carefully before using
+              [website] website (“website”, "service") operated by [name] ("us",
+              'we", "our"). The content displayed on the website is the
+              intellectual property of the [name]. You may not reuse, republish,
+              or reprint such content without our written consent. All
+              information posted is merely for educational and informational
+              purposes. It is not intended as a substitute for professional
+              advice. Should you decide to act upon any information on this
+              website, you do so at your own risk. While the information on this
+              website has been verified to the best of our abilities, we cannot
+              guarantee that there are no mistakes or errors. We reserve the
+              right to change this policy at any given time, of which you will
+              be promptly updated. If you want to make sure that you are up to
+              date with the latest changes, we advise you to frequently visit
+              this page.
+            </span>
+            DISCLAIMER
+          </div>
         </p>
       </FooterComponent>
     </Section>
   );
 };
-
 
 export default Footer;

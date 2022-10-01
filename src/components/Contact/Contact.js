@@ -238,9 +238,16 @@ const Right = styled.div`
     width: 100%;
     display: block;
     position: relative;
-    justify-content: center;
+    margin:1rem;
     align-items: center;
-    margin-top: 5vh;
+    justify-content: center;
+
+    .contactForm {
+      width:75%;
+    margin-left:1rem;
+    }
+    
+
   }
 `;
 
@@ -353,9 +360,9 @@ const Contact = ({ loaded, containerRef }) => {
                 //  data-scroll-target="#fixed-target"
               >
                 <div className="details">
-                  <div>Phone : +919711960889</div>
+                  <div>Phone : </div>
                   <div>Email : Info@artforunity.co</div>
-                  <div>Address : Near Astley Hall, Dehradun</div>
+                  <div>Address : </div>
                 </div>
               </Left>
               <Right
